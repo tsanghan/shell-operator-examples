@@ -8,4 +8,4 @@ spec:
   - name: shell-operator
     image: C0A8012F.k8s.lab/shell-operator/shell-operator:monitor-services
     imagePullPolicy: Always
-  serviceAccountName: monitor-servicess-acc
+  serviceAccountName: monitor-services-acc
