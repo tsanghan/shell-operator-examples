@@ -6,6 +6,6 @@ metadata:
 spec:
   containers:
   - name: shell-operator
-    image: C0A8012F.k8s.lab/shell-operator/shell-operator:monitor-services
+    image: C0A8012F.k8s.lab/shell-operator/shell-operator:monitor-service
     imagePullPolicy: Always
   serviceAccountName: monitor-services-acc
