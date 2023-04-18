@@ -23,11 +23,8 @@ else
       member_list_or_upstream=$(for node in "${nodesIP[@]}"; do echo -n "$node:$serviceNodePort "; done)
       printf "*** Member/Upstream %s as [%s]\n" "$resourceEvent" "${member_list_or_upstream% }"
       if [[ "$resourceEvent" == "Added" ]]; then
-        kuberctl patch svc "$serviceName" --subresource='status' --type=json --patch='[{"op":"add","path":"/status/loadBalancer/ingress","value":[{"ip":"1.2.3.4"}]}]'
-      elif [[ "$resourceEvent" == "Deleted" ]]; then
-        kuberctl patch svc "$serviceName" --subresource='status' --type=json --patch='[{"op":"remove","path":"/status/loadBalancer/ingress"}]'
-      else
-        printf "*** Event not 'Added' or 'Deleted' ***"
+        kubectl patch svc "$serviceName" --subresource='status' --type=json --patch='[{"op":"add","path":"/status/loadBalancer/ingress","value":[{"ip":"1.2.3.4"}]}]'
+        printf "*** Added External-IP 1.2.3.4 to '%s' ***" "$serviceName"
       fi
     fi
   fi
