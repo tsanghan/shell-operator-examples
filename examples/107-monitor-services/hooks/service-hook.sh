@@ -22,7 +22,7 @@ else
       nodesIP=($(kubectl get nodes -ojson | jq -r '.items[] | select(.metadata.labels | has("node.kubernetes.io/exclude-from-external-load-balancers") | not) | .status.addresses[0].address'))
       member_list_or_upstream=$(for node in "${nodesIP[@]}"; do echo -n "$node:$serviceNodePort, "; done)
       from_to=$([[ "$resourceEvent" == "Added" ]] && echo "to" || echo "from")
-      printf "*** Member/Upstream [%s] %s %s External LB\n" "${member_list_or_upstream%, }" "$resourceEvent" "$from_to"
+      printf "*** Members/Upstream [%s] %s %s External-LB ***\n" "${member_list_or_upstream%, }" "$resourceEvent" "$from_to"
       if [[ "$resourceEvent" == "Added" ]]; then
         kubectl patch svc "$serviceName" --subresource='status' --type=json --patch='[{"op":"add","path":"/status/loadBalancer/ingress","value":[{"hostname":"vs-bigip.gs.lab"}]}]'
         printf "*** Added External-Hostname vs-bigip.gs.lab to '%s' ***" "$serviceName"
